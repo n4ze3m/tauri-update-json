@@ -28,11 +28,9 @@ const main = async () => {
         const signature = value.find(asset => asset.name.includes('.sig'))
         if (signature) {
             const signatureUrl = signature.browser_download_url
-            const signatureResponse = await axios.get(signatureUrl, { responseType: 'arraybuffer' })
-            const signatureBuffer = Buffer.from(signatureResponse.data, 'binary')
-            const signatureBase64 = signatureBuffer.toString('base64')
+            const signatureResponse = await axios.get(signatureUrl)
             platforms[key] = {
-                signature: signatureBase64,
+                signature: signatureResponse.data,
                 url: signature.browser_download_url.replace('.sig', '')
             }
         }
